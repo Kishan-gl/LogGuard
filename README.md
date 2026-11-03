@@ -2,34 +2,62 @@
 
 LogGuard is a small C++17 project for reading and analyzing software logs. The idea is to make it easier to find warnings and errors without having to go through log files manually.
 
-This version starts with the log parser. The analyzer and command-line tool will be added next.
+It reads a log file, checks each entry, and prints a summary of messages by severity and component.
 
 ## Current progress
 
-The log parser is implemented, along with 9 C++ unit tests.
+The parser, analyzer, and CLI are implemented, along with 15 C++ unit tests and 13 Python component tests.
 
-For now, it can parse individual log lines, separate their fields, and check whether the input is valid. The analyzer and CLI are not included in this version yet.
+Linux CI, the contributor guide, and the design essay will be added next.
 
 ## Build and test
 
-The project is developed for Linux and requires a C++17 compiler and CMake 3.16 or newer.
+The project requires Linux, a C++17 compiler, and CMake 3.16 or newer. The default build also requires Python 3, and running the component tests requires pytest.
 
 On Ubuntu, install the required tools:
 
 ```bash
-sudo apt install build-essential cmake
+sudo apt install build-essential cmake python3 python3-pytest
 ```
 
-To build the project and run the tests:
+From the project folder, build and run the tests:
 
 ```bash
 cmake -S . -B build
 cmake --build build
-cd build
-ctest --output-on-failure
+(cd build && ctest --output-on-failure)
 ```
 
-At this stage, only the parser and its unit tests are built. Python is not required yet.
+CTest runs the parser, analyzer, and Python component tests.
+
+To build just the application without Python or the tests:
+
+```bash
+cmake -S . -B build-no-tests -DBUILD_TESTING=OFF
+cmake --build build-no-tests
+```
+
+## Run
+
+From the project folder:
+
+```bash
+./build/logguard examples/navigation.log
+./build/logguard --help
+./build/logguard --fail-on-error examples/navigation.log
+```
+
+The sample log has 5 entries: 2 INFO, 1 WARN, and 2 ERROR messages. This gives an overall health status of `UNHEALTHY`.
+
+Other possible statuses are `HEALTHY`, `WARNING`, and `NO_DATA`.
+
+The application uses these exit codes:
+
+- `0` — File processed successfully.
+- `1` — Invalid arguments, file errors, or invalid log entries.
+- `2` — File processed successfully, but errors were found in the log when `--fail-on-error` is used.
+
+Without `--fail-on-error`, a log containing errors still returns `0`. The health status is based on the messages in the log, not the actual condition of the software.
 
 ## Log format
 
@@ -48,3 +76,18 @@ For example:
 The supported levels are `INFO`, `WARN`, and `ERROR`. The parser checks the timestamp and required fields before accepting an entry.
 
 More details are available in [Requirements](docs/REQUIREMENTS.md). Planned improvements are tracked in the [Roadmap](docs/ROADMAP.md).
+
+## Project structure
+
+```text
+LogGuard/
+├── include/          # Header files
+├── src/              # Parser, analyzer, and CLI
+├── tests/            # C++ unit tests
+│   └── component/    # Python CLI tests
+├── examples/         # Sample log file
+├── docs/             # Requirements and roadmap
+├── CMakeLists.txt
+├── README.md
+└── .gitignore
+```

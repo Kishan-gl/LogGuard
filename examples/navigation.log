@@ -1,0 +1,5 @@
+2026-11-02 10:30:01|INFO|Navigation|Service started
+2026-11-02 10:30:02|WARN|Audio|Slow response
+2026-11-02 10:30:03|ERROR|Navigation|GPS unavailable
+2026-11-02 10:30:04|INFO|Audio|Playback resumed
+2026-11-02 10:30:05|ERROR|Navigation|Connection lost

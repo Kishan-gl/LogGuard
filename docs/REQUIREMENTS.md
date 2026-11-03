@@ -1,32 +1,32 @@
 # Requirements
 
-LogGuard is being developed to read a log file and provide a simple summary of warnings, errors, and other messages.
+LogGuard is a small tool for reading software logs and showing a summary of warnings, errors, and other messages.
 
-The goal is to keep the tool small and easy to use. These are the requirements planned for the first version. Only the log parser and its C++ unit tests are included in this version so far.
+The goal is to keep it simple and easy to use. The parser, analyzer, CLI, and tests are now implemented. Linux CI, the contributor guide, and the design essay will be added next.
 
 ## Functional requirements
 
-Once completed, LogGuard should be able to:
+LogGuard should be able to:
 
 - Accept a log file path through the command line and provide a `--help` option.
 - Read and validate each log entry.
 - Count the total number of `INFO`, `WARN`, and `ERROR` messages.
 - Show message counts for each component in alphabetical order.
-- Display an overall health status based on the messages:
+- Display an overall health status:
   - `NO_DATA` when the file is empty.
   - `UNHEALTHY` when errors are found.
   - `WARNING` when warnings are found but no errors.
   - `HEALTHY` when only informational messages are present.
 - Show clear error messages for invalid arguments, missing or unreadable files, and invalid log entries.
-- Include the line number when an invalid entry is found, without displaying an incomplete report.
-- Return exit code `0` when processing succeeds and `1` for input or usage errors.
-- With `--fail-on-error`, return exit code `2` after successful processing if the log contains errors.
+- Include the line number for invalid entries without printing an incomplete report.
+- Return exit code `0` for successful processing and `1` for input or usage errors.
+- Return exit code `2` after successful processing if `--fail-on-error` is enabled and the log contains errors.
 
-The health status is based only on the log messages and does not necessarily represent the actual condition of the software.
+The health status is based on the log messages, not necessarily the actual condition of the software.
 
 ## Log format
 
-Each log entry should follow this format:
+Each log entry follows this format:
 
 ```text
 YYYY-MM-DD HH:MM:SS|LEVEL|COMPONENT|MESSAGE
@@ -41,29 +41,29 @@ Example:
 The input must follow these rules:
 
 - Dates and times must be valid, including leap years and 24-hour time.
-- Supported levels are `INFO`, `WARN`, and `ERROR`, written in uppercase.
+- Levels must be `INFO`, `WARN`, or `ERROR`, written in uppercase.
 - Component names and messages cannot be empty.
-- Extra spaces at the beginning and end of component names and messages are removed.
+- Leading and trailing spaces in component names and messages are removed.
 - Additional `|` characters are allowed inside the message.
 - Both LF and CRLF line endings are supported.
-- Empty files are allowed, but blank lines inside a file are considered invalid.
+- Empty files are allowed, but blank lines are considered invalid.
 
 ## Non-functional requirements
 
-- The project should build and run on Linux using C++17 and CMake 3.16 or newer.
-- The application should use the C++ standard library without additional runtime dependencies.
-- Log files should be processed one line at a time instead of loading the entire file into memory.
-- Only the necessary counters should be stored while processing.
-- The same input should always produce the same output.
-- Important logic should be covered by C++ unit tests, while the command-line application should be tested using Python.
-- Instructions for building, running, testing, and contributing to the project should be documented.
+- Build and run on Linux using C++17 and CMake 3.16 or newer.
+- Use the C++ standard library without extra runtime dependencies.
+- Process log files one line at a time instead of loading the entire file into memory.
+- Keep component names and counters for the report instead of storing every log entry.
+- Produce the same output for the same input.
+- Test the main logic with C++ unit tests and the CLI with Python component tests.
+- Provide instructions for building, running, testing, and contributing to the project.
 
 ## Completion goals
 
-The first version will be considered complete when the application can read the sample log file, generate the expected summary, and pass all C++ and Python tests.
+The first version will be complete when LogGuard can process the sample log file, print the expected report, and pass all C++ and Python tests.
 
-A new user should also be able to build and run the project by following the README.
+A new user should also be able to build and run it by following the README.
 
-Features such as live monitoring, graphical dashboards, automatic log format detection, and processing multiple files are not planned for this version.
+Live monitoring, dashboards, automatic log format detection, and processing multiple files are outside the scope of this version.
 
 Future improvements are listed in the [Roadmap](ROADMAP.md).
