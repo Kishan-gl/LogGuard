@@ -19,14 +19,14 @@ bool is_leap_year(int year) {
     return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
 }
 
-bool valid_timestamp(const std::string& value) {
+bool valid_timestamp(const std::string& value) {          //this checks the structure of the timestamp
     // Expected format: YYYY-MM-DD HH:MM:SS
     if (value.size() != 19 || value[4] != '-' || value[7] != '-' ||
         value[10] != ' ' || value[13] != ':' || value[16] != ':') {
         return false;
     }
 
-    for (std::size_t i = 0; i < value.size(); ++i) {
+    for (std::size_t i = 0; i < value.size(); ++i) {            //this check whether the remaing char are numbers or not
         if (i == 4 || i == 7 || i == 10 || i == 13 || i == 16) {
             continue;
         }
@@ -56,7 +56,7 @@ bool valid_timestamp(const std::string& value) {
     return day >= 1 && day <= max_day;
 }
 
-Severity parse_severity(const std::string& value) {
+Severity parse_severity(const std::string& value) {        //recives a string and returns a serverity enum value
     if (value == "INFO") {
         return Severity::Info;
     }
