@@ -13,14 +13,14 @@ HealthStatus Summary::health_status() const {
     return HealthStatus::Healthy;
 }
 
-void LogAnalyzer::add(const LogEntry& entry) {
-    ++summary_.total;
+void LogAnalyzer::add(const LogEntry& entry) {  //recicves a comletea logentry
+    ++summary_.total;                                      //increase the total count by 1
     ComponentCounts& counts = summary_.components[entry.component];
 
     switch (entry.severity) {
         case Severity::Info:
-            ++summary_.info;
-            ++counts.info;
+            ++summary_.info;                   //increase the overall count ( in this case info )
+            ++counts.info;                     // increase the coutn for that particular component
             break;
         case Severity::Warn:
             ++summary_.warn;
@@ -33,7 +33,7 @@ void LogAnalyzer::add(const LogEntry& entry) {
     }
 }
 
-const Summary& LogAnalyzer::summary() const {
+const Summary& LogAnalyzer::summary() const {             //return the whole summary the total count and the individual count of each case (info, warn, ...)
     return summary_;
 }
 
