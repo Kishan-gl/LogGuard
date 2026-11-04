@@ -2,7 +2,7 @@
 
 LogGuard is a small tool for reading software logs and showing a summary of warnings, errors, and other messages.
 
-The goal is to keep it simple and easy to use. The parser, analyzer, CLI, and tests are now implemented. Linux CI, the contributor guide, and the design essay will be added next.
+The goal is to provide a simple command-line tool that validates log entries and reports message counts and overall health. The scope is limited to one local log file at a time.
 
 ## Functional requirements
 
@@ -60,7 +60,7 @@ The input must follow these rules:
 
 ## Completion goals
 
-The first version will be complete when LogGuard can process the sample log file, print the expected report, and pass all C++ and Python tests.
+The first version is considered complete when LogGuard can process the sample log file, print the expected report, and pass all C++ and Python tests.
 
 A new user should also be able to build and run it by following the README.
 

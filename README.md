@@ -4,19 +4,28 @@ LogGuard is a small C++17 project for reading and analyzing software logs. The i
 
 It reads a log file, checks each entry, and prints a summary of messages by severity and component.
 
-## Current progress
+## Project overview
 
 The parser, analyzer, and CLI are implemented, along with 15 C++ unit tests and 13 Python component tests.
 
-Linux CI, the contributor guide, and the design essay will be added next.
+The repository includes a Linux CI workflow, a [contributor guide](CONTRIBUTING.md),
+and a [design essay](docs/DESIGN_ESSAY.md).
 
 ## Build and test
+
+Clone the repository with Git and enter the project folder:
+
+```bash
+git clone https://github.com/Kishan-gl/LogGuard.git
+cd LogGuard
+```
 
 The project requires Linux, a C++17 compiler, and CMake 3.16 or newer. The default build also requires Python 3, and running the component tests requires pytest.
 
 On Ubuntu, install the required tools:
 
 ```bash
+sudo apt update
 sudo apt install build-essential cmake python3 python3-pytest
 ```
 
@@ -29,6 +38,9 @@ cmake --build build
 ```
 
 CTest runs the parser, analyzer, and Python component tests.
+
+The [GitHub Actions workflow](.github/workflows/ci.yml) is configured to build
+and run the same tests on Linux for pushes and pull requests.
 
 To build just the application without Python or the tests:
 
@@ -81,13 +93,15 @@ More details are available in [Requirements](docs/REQUIREMENTS.md). Planned impr
 
 ```text
 LogGuard/
+├── .github/workflows/ # Linux build and tests
 ├── include/          # Header files
 ├── src/              # Parser, analyzer, and CLI
 ├── tests/            # C++ unit tests
 │   └── component/    # Python CLI tests
 ├── examples/         # Sample log file
-├── docs/             # Requirements and roadmap
+├── docs/             # Requirements, roadmap, and design essay
 ├── CMakeLists.txt
+├── CONTRIBUTING.md
 ├── README.md
 └── .gitignore
 ```
