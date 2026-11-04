@@ -1,6 +1,8 @@
 #include "LogAnalyzer.h"
 #include "test_helpers.h"
 
+//total 6 test cases
+
 namespace {
 
 LogEntry make_entry(Severity severity, const std::string& component) {

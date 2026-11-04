@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <string>
 
+//total 9 test cases
+
 namespace {
 
 void expect_invalid(const std::string& line, const std::string& expected_reason) {
@@ -86,7 +88,7 @@ void checks_clock_time() {
 
 int main() {
     return run_tests({
-        {"normal entry", parses_normal_entry},
+        {"normal entry", parses_normal_entry},                 //test name , function to execute
         {"severities", parses_each_severity},
         {"whitespace and pipe in message", trims_fields_and_preserves_message_pipes},
         {"missing fields", rejects_missing_fields},

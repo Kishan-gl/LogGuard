@@ -8,6 +8,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 BINARY = Path(os.environ.get("LOGGUARD_BIN", ROOT / "build" / "logguard"))
 
+##total of 13 test
+
 
 def run_cli(*args):
     return subprocess.run(
@@ -26,7 +28,7 @@ def log_file(tmp_path, text):
 
 def test_example_file_produces_expected_report():
     result = run_cli(ROOT / "examples" / "navigation.log")
-    assert result.returncode == 0
+    assert result.returncode == 0                              #assert is as equal as check
     assert "Total entries: 5" in result.stdout
     assert "INFO:  2" in result.stdout
     assert "WARN:  1" in result.stdout
@@ -34,7 +36,7 @@ def test_example_file_produces_expected_report():
     assert "Audio: 1 info, 1 warnings, 0 errors" in result.stdout
     assert "Navigation: 1 info, 0 warnings, 2 errors" in result.stdout
     assert "Overall Health: UNHEALTHY" in result.stdout
-    assert result.stderr == ""
+    assert result.stderr == ""                       #error output channel , it should print no error msg, while usign this file
 
 
 def test_component_order_is_stable(tmp_path):
