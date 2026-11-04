@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
             fail_on_error = true;
         } else if (!arg.empty() && arg[0] == '-') {
             std::cerr << "Error: unknown or repeated option: " << arg << '\n';
-            print_usage(std::cerr);
+            print_usage(std::cerr);              //used cerr to output error messages, warnings....
             return 1;
         } else if (filename.empty()) {
             filename = arg;
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
 
     LogAnalyzer analyzer;
     std::string line;
-    std::size_t line_number = 0;
+    std::size_t line_number = 0;  //to keep track of which line we are reading so we can report exactly at which line the log entry is invalid
 
     while (std::getline(input, line)) {
         ++line_number;

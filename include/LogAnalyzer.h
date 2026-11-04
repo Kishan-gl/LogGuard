@@ -24,7 +24,7 @@ struct Summary {
     std::size_t info = 0;
     std::size_t warn = 0;
     std::size_t error = 0;
-    std::map<std::string, ComponentCounts> components;
+    std::map<std::string, ComponentCounts> components;    //key = component name , value = component counter
 
     HealthStatus health_status() const;
 };
